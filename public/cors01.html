@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form name="form1" onsubmit="send(); return false;">
+        <input type="text" name="nickname" value="victor">
+        <br>
+        <input type="number" name="age" value="23">
+        <br>
+        <input type="submit">
+    </form>
+</div>
+
+<script src="lib/jquery-3.6.0.js"></script>
+<script>
+    const send = ()=>{
+        $.get('http://localhost:3000/try-qs', $(document.form1).serialize(), function(data){
+            console.log(data);
+        }, 'json');
+    }
+</script>
+</body>
+</html>

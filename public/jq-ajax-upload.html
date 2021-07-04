@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+</head>
+<body>
+
+<div class="container">
+    <form name="form1" method="post" novalidate onsubmit="send(); return false;">
+        <div class="form-group">
+            <label for="avatar">大頭貼</label>
+            <input type="file" class="form-control"
+                   id="avatar" name="avatar">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <img src="" alt="" id="myimg">
+
+</div>
+<script src="lib/jquery-3.6.0.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+<script>
+    const send = ()=>{
+
+        const fd = new FormData(document.form1);
+
+        fetch('/try-upload', {
+            method: 'POST',
+            body: fd,
+        })
+            .then(r => r.json())
+            .then(obj=>{
+                console.log(obj);
+                if(obj.filename){
+                    myimg.src = '/img/' + obj.filename;
+                }
+            });
+
+    };
+</script>
+</body>
+</html>

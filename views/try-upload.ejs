@@ -1,0 +1,35 @@
+<%- include('parts/html-head') %>
+<%- include('parts/navbar') %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">上傳測試</h5>
+
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="avatar">File</label>
+                            <input type="file" class="form-control"
+                                   id="avatar" name="avatar">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control"
+                                   id="name" name="name" value="小明">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<%- include('parts/scripts') %>
+<%- include('parts/html-foot') %>

@@ -1,0 +1,87 @@
+<%- include('../parts/html-head') %>
+<%- include('../parts/navbar') %>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">電郵</th>
+                    <th scope="col">手機</th>
+                    <th scope="col">生日</th>
+                    <th scope="col">地址</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<%- include('../parts/scripts') %>
+<script>
+
+    const pageBtnTpl = o => {
+        return `
+            <li class="page-item ${o.active}">
+                <a class="page-link" href="#${o.page}">${o.page}</a>
+            </li>`;
+    };
+
+    const itemTpl = o => {
+        o.address = o.address.replace(/</g, '&lt;');
+        o.address = o.address.replace(/>/g, '&gt;');
+        return `<tr>
+                    <td>${o.sid}</td>
+                    <td>${o.name}</td>
+                    <td>${o.email}</td>
+                    <td>${o.mobile}</td>
+                    <td>${o.birthday}</td>
+                    <td>${o.address}</td>
+                </tr>`;
+    };
+
+    const getPageData = (page=1)=>{
+        $.get('/address-book/api/list', {page}, function(data){
+            console.log(data);
+            if(data.rows && data.rows.map){
+                const html = data.rows.map(el => itemTpl(el)).join('');
+                $('tbody').html( html );
+            }
+            let str = '';
+            for(let i=data.page-5; i<=data.page+5; i++){
+                if(i>=1 && i<=data.totalPages){
+                    str += pageBtnTpl({
+                        active: i===data.page ? 'active' : '',
+                        page: i
+                    });
+                }
+            }
+            $('.pagination').html( str );
+
+        }, 'json');
+    };
+
+    const myHashChange = ()=>{
+        let h = location.hash.slice(1);
+        h = parseInt(h) || 1;
+        getPageData(h)
+    };
+    window.addEventListener('hashchange', myHashChange);
+
+    myHashChange(); // init
+
+</script>
+<%- include('../parts/html-foot') %>

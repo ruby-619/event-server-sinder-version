@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #info {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+        }
+        .box {
+            position: relative;
+            width: 500px;
+            height: 800px;
+            background-color: #e69696;
+        }
+    </style>
+</head>
+<body>
+<div id="info">
+    <a href="#aaa">aaa</a><br>
+    <a href="#bbb">bbb</a><br>
+    <a href="#ccc">ccc</a><br>
+</div>
+<div class="box" id="aaa">aaa</div>
+<div class="box" id="bbb" style="background-color: #6fbed6;">bbb</div>
+<div class="box" id="ccc" style="background-color: #5bc572;">ccc</div>
+
+<script>
+    function hashHandler() {
+        let h = location.hash;
+        if(h.length<2) {
+            h = 'aaa';
+        } else {
+            h = h.slice(1);
+        }
+        console.log(h);
+    }
+    window.addEventListener('hashchange', hashHandler);
+    hashHandler();  // 第一次執行
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<button onclick="send()">send token</button>
+<div id="info"></div>
+<script>
+
+    function send() {
+        // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJtaW5nQGdnLmNvbSIsIm5pY2tuYW1lIjoi6ICB5piOIiwiaWF0IjoxNjI0ODY0NjU5fQ.8FHTEw0mD02xf40ZFBAjAzWtw28m6c4Om257Tpx-pUE
+        const token = localStorage.getItem('token');
+
+        fetch('/jwt-verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token,
+                test: '測試',
+            })
+        })
+        .then(r=>r.json())
+        .then(obj=>{
+            info.innerText = JSON.stringify(obj);
+        })
+    }
+</script>
+</body>
+</html>

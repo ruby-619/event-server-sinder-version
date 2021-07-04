@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<button onclick="p()">test push state</button>
+
+<script>
+    let i = 1;
+    function p() {
+        history.pushState({
+            name: 'peter',
+            age: ++i,
+        }, '', 'myurl-' + i);
+    }
+
+    window.onpopstate = function(event){
+        console.log(event.state);
+    };
+</script>
+</body>
+</html>

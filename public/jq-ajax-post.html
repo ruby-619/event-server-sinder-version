@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+</head>
+<body>
+
+<div class="container">
+    <form name="form1" method="post" novalidate onsubmit="send(); return false;">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control"
+                   id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="password" class="form-control"
+                   id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+    <div id="info"></div>
+
+</div>
+<script src="lib/jquery-3.6.0.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+<script>
+    const send = ()=>{
+        $.post('/try-post', $(document.form1).serialize(), function(data){
+            console.log(data);
+            info.innerHTML += JSON.stringify(data) + '<br>';
+        }, 'json');
+
+
+
+    };
+</script>
+</body>
+</html>

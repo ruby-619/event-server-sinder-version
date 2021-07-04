@@ -1,0 +1,34 @@
+
+GET http://localhost:3000/
+
+### abc
+
+GET http://localhost:3000/try-qs?a[name]=bill&a[age]=25
+
+###
+
+POST http://localhost:3000/try-post
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+
+name=小新&age=30
+
+###
+
+POST http://localhost:3000/try-post
+Content-Type: application/json; charset=utf-8
+
+{
+    "name":"david",
+    "age": 28
+}
+
+###
+
+POST  http://localhost:3000/login
+Content-Type: application/json; charset=utf-8
+
+{
+    "account": "ming@gg.com",
+    "password": "123456"
+}
+

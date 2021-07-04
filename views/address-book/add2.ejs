@@ -1,0 +1,84 @@
+<%- include('../parts/html-head') %>
+<%- include('../parts/navbar') %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="infobar" class="alert alert-danger" role="alert" style="display: none">
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">新增資料</h5>
+
+                    <form name="form1" method="post" onsubmit="checkForm(); return false;">
+                        <div class="form-group">
+                            <label for="name">* name</label>
+                            <input type="text" class="form-control"
+                                   id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">email</label>
+                            <input type="email" class="form-control"
+                                   id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">mobile</label>
+                            <input type="text" class="form-control"
+                                   pattern="09\d{2}-?\d{3}-?\d{3}"
+                                   id="mobile" name="mobile">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday">birthday</label>
+                            <input type="date" class="form-control"
+                                   id="birthday" name="birthday">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">address</label>
+                            <textarea class="form-control" id="address" name="address" cols="20" rows="3"></textarea>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">新增</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<%- include('../parts/scripts') %>
+<script>
+    const infobar = $('#infobar')
+
+    function checkForm(){
+        // TODO: 檢查欄位資料格式
+        const fd = new FormData(document.form1);
+
+        fetch('', {
+            method: 'POST',
+            body: fd
+        })
+        .then(r=>r.json())
+        .then(data=>{
+            console.log(data);
+            if(data.success){
+                infobar
+                    .removeClass('alert-danger')
+                    .addClass('alert-success')
+                    .html('新增成功');
+                infobar.slideDown();
+
+            } else {
+                infobar
+                    .removeClass('alert-success')
+                    .addClass('alert-danger')
+                    .html(data.error);
+                infobar.slideDown();
+            }
+            setTimeout(()=>{
+                infobar.slideUp();
+            }, 5000);
+        })
+    }
+</script>
+<%- include('../parts/html-foot') %>

@@ -1,0 +1,70 @@
+<%- include('parts/html-head') %>
+<%- include('parts/navbar') %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="infobar" class="alert alert-danger" role="alert" style="display: none">
+                帳號或密碼錯誤
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">登入</h5>
+
+                    <form name="form1" method="post" onsubmit="checkForm(); return false;">
+                        <div class="form-group">
+                            <label for="account">Account</label>
+                            <input type="text" class="form-control"
+                                   id="account" name="account" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control"
+                                   id="password" name="password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">登入</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<%- include('parts/scripts') %>
+<script>
+    const infobar = $('#infobar')
+
+    function checkForm(){
+        // TODO: 檢查欄位資料格式
+        $.post('', $(document.form1).serialize(), function(data){
+            console.log(data);
+            if(data.success){
+
+                if(data.token){
+                    localStorage.setItem('token', data.token);
+                }
+
+                infobar
+                    .removeClass('alert-danger')
+                    .addClass('alert-success')
+                    .html('成功登入');
+                infobar.slideDown();
+                setTimeout(()=>{
+                    location.href = '/';
+                }, 1000);
+            } else {
+                infobar
+                    .removeClass('alert-success')
+                    .addClass('alert-danger')
+                    .html(data.error);
+                infobar.slideDown();
+                setTimeout(()=>{
+                    infobar.slideUp();
+                }, 3000);
+            }
+
+        }, 'json');
+    }
+</script>
+<%- include('parts/html-foot') %>

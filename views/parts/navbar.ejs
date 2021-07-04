@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        練習
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/json-test">json-test</a>
+                        <a class="dropdown-item" href="/try-qs?name=shin&age=30">try-qs</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        address-book
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/address-book/list">列表</a>
+                        <a class="dropdown-item" href="/address-book/list2">列表 (ajax)</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/address-book/add">新增</a>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav">
+                <!--
+                <%- JSON.stringify(locals.admin) %>
+                -->
+                <% if( locals.admin && admin.account ){ %>
+                    <li class="nav-item">
+                        <a class="nav-link" ><%= admin.nickname %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">登出</a>
+                    </li>
+                <% } else {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">登入</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">註冊</a>
+                    </li>
+                <% } %>
+
+            </ul>
+        </div>
+    </div>
+</nav>

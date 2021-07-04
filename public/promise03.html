@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function myPromise() {
+        return new Promise((resolve, reject)=>{
+            const rnd = Math.random()*1500;
+            setTimeout(function(){
+                resolve(rnd);
+            }, rnd);
+        });
+    }
+
+    myPromise()
+    .then(r =>{
+        console.log(1, r);
+        return myPromise();
+    })
+    .then(r =>{
+        console.log(2, r);
+        return myPromise();
+    })
+    .then(r =>{
+        console.log(3, r);
+        return myPromise();
+    })
+    .then(r =>{
+        console.log(4, r);
+        return myPromise();
+    })
+    .then(r =>{
+        console.log(5, r);
+    })
+
+
+    /*
+    new Promise((resolve, reject)=>{
+        const rnd = Math.random()*1500;
+        setTimeout(function(){
+            resolve('1:' + rnd);
+        }, rnd);
+    })
+    .then(r =>{
+        console.log(r);
+        return 7;
+    })
+    .then(r =>{
+        console.log(r);
+        return new Promise((resolve, reject)=>{
+            const rnd = Math.random()*1500;
+            setTimeout(function(){
+                resolve('2:' + rnd);
+            }, rnd);
+        });
+    })
+    .then(r =>{
+        console.log(r);
+    })
+*/
+
+</script>
+</body>
+</html>

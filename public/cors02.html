@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button onclick="send()">send</button>
+
+<script src="lib/jquery-3.6.0.js"></script>
+<script>
+    const send = ()=>{
+        fetch('http://localhost:3000/try-sess', {
+            credentials: "include"
+        })
+        .then(r=>r.json())
+        .then(data=>{
+            console.log(data);
+        })
+
+    }
+</script>
+</body>
+</html>

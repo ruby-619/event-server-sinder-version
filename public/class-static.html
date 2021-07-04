@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="info"></div>
+
+
+<script>
+
+    class User {
+
+
+        constructor(name, age) {
+            this._name = name;
+            this._age = age;
+            User._total = User._total || 0;
+            User._total++;
+        }
+
+        // getter
+        get age(){
+            return this._age;
+        }
+
+        // setter
+        set age(a){
+            this._age = a;
+        }
+
+        toJSON(){
+            return {
+                name: this._name,
+                age: this._age,
+            }
+        }
+        toString() {
+            return JSON.stringify(this.toJSON());
+        }
+
+        // static getter
+        static get count() {
+            return User._total;
+        }
+    }
+
+    let u1 = new User('bill', 23);
+    let u2 = new User('david', 25);
+
+
+
+</script>
+</body>
+</html>

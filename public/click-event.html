@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+<div>
+
+    <button id="btn1" onclick="console.log(1)">btn 1</button>
+
+    <br>
+    <button id="btn2" >btn 2</button>
+</div>
+<script>
+    const btn1 = document.querySelector('#btn1');
+    const btn2 = document.querySelector('#btn2');
+
+    const f = (event)=>{
+        console.log(5);
+        console.log(event.target);
+    };
+
+    btn1.onclick = function(event){
+        console.log(2);
+    };
+
+    btn1.addEventListener('click', (event)=>{
+        console.log(3);
+    });
+
+    btn1.addEventListener('click', (event)=>{
+        console.log(4);
+    });
+    btn1.addEventListener('click', f);
+    btn1.addEventListener('click', f);
+    btn1.addEventListener('click', f);
+    btn2.addEventListener('click', f);
+
+
+</script>
+</body>
+</html>

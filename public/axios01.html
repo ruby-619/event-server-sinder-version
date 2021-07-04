@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<input type="text"><br>
+<button>test</button>
+<button onclick="send()">send AJAX</button>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    function send() {
+        axios.get('alert.html')
+            .then(function(response){
+                console.log(response.data);
+            });
+    }
+
+</script>
+</body>
+</html>

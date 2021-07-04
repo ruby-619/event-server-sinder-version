@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    new Promise((resolve, reject)=>{
+        const rnd = Math.random()*1500;
+        setTimeout(function(){
+            resolve('1:' + rnd);
+            // reject('error-----');
+        }, rnd);
+    })
+    .then(r =>{
+        console.log(r);
+        throw new Error('my error');
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+
+</script>
+</body>
+</html>

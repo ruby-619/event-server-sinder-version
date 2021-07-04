@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+</head>
+<body>
+
+<div class="container">
+    <button class="btn btn-primary" onclick="send()">send get request</button>
+    <br>
+    <textarea name="" id="ta" cols="30" rows="10"></textarea>
+
+</div>
+<script src="lib/jquery-3.6.0.js"></script>
+<script src="bootstrap/js/bootstrap.bundle.js"></script>
+<script>
+    const  send = ()=>{
+        // $.get('/try-qs', {name:'Flora', age:22}, function(data){
+        //     console.log(data);
+        //     $('#ta').val(JSON.stringify(data));
+        // },'json');
+
+        $.get('/try-qs', 'name=Aaron&age=29', function(data){
+            console.log(data);
+            $('#ta').val(JSON.stringify(data));
+        },'json');
+    };
+</script>
+</body>
+</html>

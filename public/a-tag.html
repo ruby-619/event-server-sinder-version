@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+<!--    <a href="https://tw.yahoo.com">yahoo</a>-->
+<!--    <a href="https://tw.yahoo.com" onclick="func()">yahoo 2</a>-->
+<!--    <a href="javascript: func();" >yahoo 3</a>-->
+    <a href="https://tw.yahoo.com" onclick="return confirm('是否要到 Yahoo?')">yahoo 5</a>
+</div>
+
+<script>
+    const func = ()=>{
+        console.log('hello');
+    }
+    // document.querySelector('a').addEventListener('click', (event)=>{
+    //     event.preventDefault();
+    //    func();
+    // });
+</script>
+</body>
+</html>

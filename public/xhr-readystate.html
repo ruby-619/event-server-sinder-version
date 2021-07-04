@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<input type="text"><br>
+<button>test</button>
+<button onclick="send()">send AJAX</button>
+
+<script>
+
+    function send() {
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            console.log(`readystate: ${xhr.readyState} , ${xhr.status}`);
+        };
+        xhr.onload = function(event){
+            console.log(xhr.responseText);
+        };
+        xhr.open('GET', 'alert.html');
+        xhr.send();
+    }
+
+</script>
+</body>
+</html>

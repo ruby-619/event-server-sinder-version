@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            background-color: #6aaae2;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <button id="btn1" ><span>btn 1</span></button>
+    <br>
+    <button id="btn2" >btn 2</button>
+</div>
+<script>
+    const btn1 = document.querySelector('#btn1');
+    const btn2 = document.querySelector('#btn2');
+
+    const f = (event)=>{
+        console.log(event.target);  // 事件觸發的來源（最內層的元素）
+        console.log(event.currentTarget); // 註冊事件處理器的那個物件
+    };
+    document.body.addEventListener('click', f);
+
+
+
+</script>
+</body>
+</html>
