@@ -67,8 +67,8 @@ class Event {
 
     //讀取資料
     static async getRows(params={}){
-        let perPage = params.perPage || 5;  // 每頁有幾筆
-        let page = params.page || 1;  // 查看第幾頁
+        let perPage = params.perPage || 6;  // 每頁有幾筆
+        let page = params.page || 2;  // 查看第幾頁
         let cate = parseInt(params.cate) || 0;  // 分類編號
         let keyword = params.keyword || '';  // 搜尋產品名稱或者作者姓名
         let orderBy = params.orderBy || '';  // 排序

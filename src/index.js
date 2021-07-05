@@ -257,6 +257,8 @@ app.use('/event', require(__dirname + '/routes/event'));
 app.use('/cart', require(__dirname + '/routes/cart'));
 
 
+
+
 // 404 放在所有的路由後面
 app.use((req, res)=>{
     res.type('text/html');

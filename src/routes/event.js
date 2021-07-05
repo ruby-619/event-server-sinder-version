@@ -38,13 +38,13 @@ router.get('/add', async (req, res)=>{
 
 // 取得單項商品
 router.get('/all', async (req, res)=>{
-    // res.json(await Product.getRows({cate:3})); // 測試分類
+    // res.json(await Event.getRows({cate:3})); // 測試分類
     res.json(await Event.getRows({keyword:'藝文'})); // 測試關鍵字中有林
 });
 
 // 取得單項商品
 router.get('/:id', async (req, res)=>{
-    res.json(await Event.getRows(2));
+    res.json(await Event.getRow(req.params.id));
 });
 
 
