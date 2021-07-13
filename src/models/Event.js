@@ -68,7 +68,7 @@ class Event {
     //讀取資料
     static async getRows(params={}){
         let perPage = params.perPage || 6;  // 每頁有幾筆
-        let page = params.page || 2;  // 查看第幾頁
+        let page = params.page || 1;  // 查看第幾頁
         let cate = parseInt(params.cate) || 0;  // 分類編號
         let keyword = params.keyword || '';  // 搜尋產品名稱或者作者姓名
         let orderBy = params.orderBy || '';  // 排序
@@ -79,7 +79,7 @@ class Event {
         }
         if(keyword){
             let k2 = db.escape('%' + keyword + '%'); // 百分比先接起來，再去escape：會跳脫 加單引號
-            where += ` AND (eventCategory LIKE ${k2}) `;
+            where += ` AND (eventName LIKE ${k2}) `;
             // where += ` AND (eventCategory LIKE ${k2} OR bookname LIKE ${k2}) `;
         }
 
@@ -108,6 +108,7 @@ class Event {
         let r2, totalPages=0;
         if(total){
             totalPages = Math.ceil(total/perPage);
+            // let r_sql = `SELECT * FROM \`event\` ${where} ${orderStr} `;
             let r_sql = `SELECT * FROM \`event\` ${where} ${orderStr} LIMIT ${(page-1)*perPage}, ${perPage}`;
             [r2] = await db.query(r_sql);
         }
@@ -160,6 +161,16 @@ class Event {
         } else {
             return false;
         }
+    }
+    static async getCate(eCategory){
+        if(!eCategory) return null;
+        let sql = "SELECT * FROM `event` WHERE `eCategory`=?"
+        // 回傳取得類別資料的陣列
+        let [r] = await db.query(sql, [eCategory]);
+        if(!r || !r.length){
+            return null;
+        }
+        return r; 
     }
 
 }

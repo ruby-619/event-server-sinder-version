@@ -14,9 +14,15 @@ const router = express.Router();
 
 // 取得所有商品 + 篩選 ?
 router.get('/', async (req, res)=>{
+    res.json(await Event.getRows(req.query));
+    
+});
+router.get('/page', async (req, res)=>{
     res.json(await Event.getRows());
     
 });
+
+
 
 
 // 新增商品測試
@@ -36,10 +42,11 @@ router.get('/add', async (req, res)=>{
     res.json([req.baseUrl, req.url, obj1, obj2, await p3.remove()]);
 });
 
-// 取得單項商品
+// 關鍵自查詢
 router.get('/all', async (req, res)=>{
     // res.json(await Event.getRows({cate:3})); // 測試分類
-    res.json(await Event.getRows({keyword:'藝文'})); // 測試關鍵字中有林
+    res.json(await Event.getRows({keyword:'女'})); // 測試關鍵字中有林
+    res.json(await Event.getRows(req.query)); 
 });
 
 // 取得單項商品
@@ -49,4 +56,9 @@ router.get('/:id', async (req, res)=>{
 
 
 
+//類別篩選
+router.get('/category/:eCategory', async(req, res)=>{
+    let p = await Event.getCate(req.params.eCategory)    
+    res.json(p);
+  });
 module.exports = router; 
