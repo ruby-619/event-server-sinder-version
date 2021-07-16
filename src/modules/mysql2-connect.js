@@ -4,7 +4,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'smallsc',
+    database: 'lunar_phase',
     waitForConnections: true,
     connectionLimit: 10, // 最大連線數
     queueLimit: 0

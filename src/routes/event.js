@@ -44,7 +44,7 @@ router.get('/add', async (req, res)=>{
 
 // 關鍵自查詢
 router.get('/all', async (req, res)=>{
-    // res.json(await Event.getRows({cate:3})); // 測試分類
+    // res.json(await Event.getRows({cate:3})); // 測試分類 
     res.json(await Event.getRows({keyword:'女'})); // 測試關鍵字中有林
     res.json(await Event.getRows(req.query)); 
 });

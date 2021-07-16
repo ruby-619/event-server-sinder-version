@@ -252,9 +252,17 @@ app.get('/try-db', (req, res)=>{
         });
 });
 
-app.use('/address-book', require(__dirname + '/routes/address-book'));
+// app.use('/address-book', require(__dirname + '/routes/address-book'));
+app.use('/article', require(__dirname + '/routes/event'));
+app.use('/cartProduct', require(__dirname + '/routes/event'));
 app.use('/event', require(__dirname + '/routes/event'));
-app.use('/cart', require(__dirname + '/routes/cart'));
+app.use('/kitcat', require(__dirname + '/routes/event'));
+app.use('/kitset', require(__dirname + '/routes/event'));
+app.use('/login', require(__dirname + '/routes/event'));
+app.use('/order', require(__dirname + '/routes/event'));
+app.use('/orderList', require(__dirname + '/routes/event'));
+app.use('/product', require(__dirname + '/routes/event'));
+
 
 
 
