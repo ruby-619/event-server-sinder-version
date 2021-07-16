@@ -1,6 +1,6 @@
 
 require('dotenv').config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4567;
 const express = require('express');
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session);
@@ -144,9 +144,9 @@ app.get(/\/m\/09\d{2}-?\d{3}-?\d{3}$/i, (req, res)=>{
 });
 
 // app.use( require(__dirname + '/routes/admin2') );
-const admin2 = require(__dirname + '/routes/admin2');
-app.use('/admin3', admin2);
-app.use(admin2);
+// const admin2 = require(__dirname + '/routes/admin2');
+// app.use('/admin3', admin2);
+// app.use(admin2);
 
 app.get('/try-sess', (req, res)=>{
     req.session.my_var = req.session.my_var || 0;
@@ -156,70 +156,134 @@ app.get('/try-sess', (req, res)=>{
         session: req.session,
     });
 });
-
-app.get('/login', (req, res)=>{
-    if(req.session.admin){
-        res.redirect('/');  // 若是已登入，轉向到首頁
-    } else {
-        res.render('login');
-    }
-});
-app.post('/login', async (req, res)=>{
-
+// !!!!! 以下為  moana   !!!!!
+// 表單傳遞一般欄位資料
+app.post('/login',async (req, res) => {
     const output = {
         success: false,
-        code: 0,
-        error: '沒有 account 或沒有 password 欄位',
-        body: req.body,
-    };
-
-    if(!req.body.account || !req.body.password){
-        return res.json(output);
+        error: '帳號或密碼錯誤',
+        body: req.body
     }
 
-    const [ members ] = await db.query("SELECT * FROM members WHERE `email`=?", [req.body.account]);
+    const sql = "SELECT * FROM `users` WHERE " + `userEmail = '${req.body.account}' AND userPassword = '${req.body.password}'`
+    const [account] = await dbMysql2.query(sql)
 
-    if(! members.length) {
-        output.code = 401;
-        output.error = "帳號或密碼錯誤(沒有此帳號)";
-        return res.json(output);
+    // 有資料，正列有長度
+    let a = ''
+    if(account.length) {
+        req.session.user = account[0]
+        output.success = true
+        output.error = ""
+        output.data = account[0]
+        res.json(output)
+    } else {
+        res.json(output)
     }
-
-    const member = members[0];
-
-    const result = await bcrypt.compare(req.body.password, member.password);
-    if(! result) {
-        output.code = 405;
-        output.error = "帳號或密碼錯誤(密碼錯誤)";
-        return res.json(output);
+})
+// 會員註冊
+app.post('/register',async (req, res) => {
+    const output = {
+        success: false,
+        error: "資料不完整"
     }
+    let sql = "SELECT `userEmail`,`userPassword` FROM `users` WHERE userEmail = " + `'${req.body.account}'`
+    // 前端欄位都有資料
+    if (req.body.account && req.body.password && req.body.confirm_password) {
+        // res.json({
+        //     acc: req.body.account,
+        //     pwd: req.body.password,
+        //     c_pwd: req.body.confirm_password
+        // })
 
-    const {id, email, nickname} = member;
-    // req.session.member = {id, email, nickname};  // 使用 session
+        // 前端密碼與確認密碼比對，如果沒有帳號，就新增帳號
+        if (req.body.password === req.body.confirm_password) {
+            // 前端帳號與資料庫帳號比對
+            const [account] = await dbMysql2.query(sql)
+            const data = account[0]
 
-    // output.token = jwt.sign({id, email, nickname}, process.env.TOKEN_SECRET,{ expiresIn: '180000'}); // 三分鐘過期
-    output.token = jwt.sign({id, email, nickname}, process.env.TOKEN_SECRET);
-    output.success = true;
-    output.error = '';
-    output.code = 200;
-
-    res.json(output);
-});
-app.get('/logout', (req, res)=>{
-    delete req.session.member;
-    res.redirect('/');
-});
-app.post('/jwt-verify', (req, res)=>{
-    let payload;
-    try {
-        payload = jwt.verify(req.body.token, process.env.TOKEN_SECRET);
-        return res.json(payload);
-    } catch(ex) {
-        return res.json({
-            error: ex.toString()
-        });
+            if (account.length) {
+                // res.json(date)
+                output.success = false
+                output.error = '不能使用此帳號'
+                res.json(output)
+            }
+            else {
+                // 測試: SELECT `userEmail`,`userPassword` FROM `users` WHERE userEmail = 'm@gmail.com';
+                sql = "INSERT INTO `users`(`userEmail`, `userPassword`) VALUES " +`('${req.body.account}', '${req.body.password}')`
+                dbMysql2.query(sql)
+                output.success = true
+                output.error = '新增帳號'
+                res.json(output)
+            }
+        }
     }
-});
+    res.json(output)
+})
+
+// 老師的login 先註解掉
+// app.get('/login', (req, res)=>{
+//     if(req.session.admin){
+//         res.redirect('/');  // 若是已登入，轉向到首頁
+//     } else {
+//         res.render('login');
+//     }
+// });
+// app.post('/login', async (req, res)=>{
+
+//     const output = {
+//         success: false,
+//         code: 0,
+//         error: '沒有 account 或沒有 password 欄位',
+//         body: req.body,
+//     };
+
+//     if(!req.body.account || !req.body.password){
+//         return res.json(output);
+//     }
+
+//     const [ members ] = await db.query("SELECT * FROM members WHERE `email`=?", [req.body.account]);
+
+//     if(! members.length) {
+//         output.code = 401;
+//         output.error = "帳號或密碼錯誤(沒有此帳號)";
+//         return res.json(output);
+//     }
+
+//     const member = members[0];
+
+//     const result = await bcrypt.compare(req.body.password, member.password);
+//     if(! result) {
+//         output.code = 405;
+//         output.error = "帳號或密碼錯誤(密碼錯誤)";
+//         return res.json(output);
+//     }
+
+//     const {id, email, nickname} = member;
+//     // req.session.member = {id, email, nickname};  // 使用 session
+
+//     // output.token = jwt.sign({id, email, nickname}, process.env.TOKEN_SECRET,{ expiresIn: '180000'}); // 三分鐘過期
+//     output.token = jwt.sign({id, email, nickname}, process.env.TOKEN_SECRET);
+//     output.success = true;
+//     output.error = '';
+//     output.code = 200;
+
+//     res.json(output);
+// });
+// app.get('/logout', (req, res)=>{
+//     delete req.session.member;
+//     res.redirect('/');
+// });
+// app.post('/jwt-verify', (req, res)=>{
+//     let payload;
+//     try {
+//         payload = jwt.verify(req.body.token, process.env.TOKEN_SECRET);
+//         return res.json(payload);
+//     } catch(ex) {
+//         return res.json({
+//             error: ex.toString()
+//         });
+//     }
+// });
 app.get('/headers', (req, res)=>{
     res.json({
         headers: req.headers,
@@ -253,15 +317,15 @@ app.get('/try-db', (req, res)=>{
 });
 
 // app.use('/address-book', require(__dirname + '/routes/address-book'));
-app.use('/article', require(__dirname + '/routes/event'));
-app.use('/cartProduct', require(__dirname + '/routes/event'));
+app.use('/article', require(__dirname + '/routes/article'));
+app.use('/cartProduct', require(__dirname + '/routes/cartProduct'));
 app.use('/event', require(__dirname + '/routes/event'));
-app.use('/kitcat', require(__dirname + '/routes/event'));
-app.use('/kitset', require(__dirname + '/routes/event'));
-app.use('/login', require(__dirname + '/routes/event'));
-app.use('/order', require(__dirname + '/routes/event'));
-app.use('/orderList', require(__dirname + '/routes/event'));
-app.use('/product', require(__dirname + '/routes/event'));
+app.use('/kitcat', require(__dirname + '/routes/kitcat'));
+app.use('/kitset', require(__dirname + '/routes/kitset'));
+app.use('/login', require(__dirname + '/routes/login'));
+app.use('/cart/product/order', require(__dirname + '/routes/order'));
+app.use('/orderlist', require(__dirname + '/routes/orderList'));
+// app.use('/product', require(__dirname + '/routes/product'));
 
 
 
